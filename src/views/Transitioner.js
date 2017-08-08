@@ -10,6 +10,7 @@ import {
 
 import invariant from 'fbjs/lib/invariant';
 
+import NavigationActions from '../NavigationActions';
 import NavigationScenesReducer from './ScenesReducer';
 import TransitionConfigs from './TransitionConfigs';
 import addNavigationHelpers from '../addNavigationHelpers';
@@ -192,6 +193,7 @@ class Transitioner extends React.Component<*, Props, State> {
 
     // update scenes and play the transition
     this._isTransitionRunning = true;
+    this.props.navigation.dispatch(NavigationActions.transitionStart());
     this.setState(nextState, () => {
       nextProps.onTransitionStart && nextProps.onTransitionStart(
         this._transitionProps,
@@ -264,6 +266,7 @@ class Transitioner extends React.Component<*, Props, State> {
         );
         this._queuedTransition = null;
       } else {
+        this.props.navigation.dispatch(NavigationActions.transitionEnd());
         this._isTransitionRunning = false;
       }
     });
