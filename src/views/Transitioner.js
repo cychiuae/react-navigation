@@ -254,6 +254,7 @@ class Transitioner extends React.Component<*, Props, State> {
     this._transitionProps = buildTransitionProps(this.props, nextState);
 
     this.setState(nextState, () => {
+      this.props.navigation.dispatch(NavigationActions.transitionEnd());
       this.props.onTransitionEnd && this.props.onTransitionEnd(
         this._transitionProps,
         prevTransitionProps,
@@ -266,7 +267,6 @@ class Transitioner extends React.Component<*, Props, State> {
         );
         this._queuedTransition = null;
       } else {
-        this.props.navigation.dispatch(NavigationActions.transitionEnd());
         this._isTransitionRunning = false;
       }
     });
