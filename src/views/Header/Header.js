@@ -16,6 +16,7 @@ import type {
   NavigationStyleInterpolator,
   LayoutEvent,
   HeaderProps,
+  ViewStyleProp,
 } from '../../TypeDefinition';
 
 type SceneProps = {
@@ -154,8 +155,10 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
   };
 
   _renderLeft(props: SceneProps): ?React.Element<*> {
+    const details = this.props.getScreenDetails(props.scene);
+    const leftStyle = details.options.headerLeftStyle;
     return this._renderSubView(
-      props,
+      { ...props, style: leftStyle },
       'left',
       this._renderLeftComponent,
       HeaderStyleInterpolator.forLeft
@@ -163,19 +166,10 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
   }
 
   _renderTitle(props: SceneProps, options: *): ?React.Element<*> {
-    const style = {};
-
-    if (Platform.OS === 'android') {
-      if (!options.hasLeftComponent) {
-        style.left = 0;
-      }
-      if (!options.hasRightComponent) {
-        style.right = 0;
-      }
-    }
-
+    const details = this.props.getScreenDetails(props.scene);
+    const titleStyle = details.options.headerTitleStyle;
     return this._renderSubView(
-      { ...props, style },
+      { ...props, style: titleStyle },
       'title',
       this._renderTitleComponent,
       HeaderStyleInterpolator.forCenter
@@ -183,8 +177,10 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
   }
 
   _renderRight(props: SceneProps): ?React.Element<*> {
+    const details = this.props.getScreenDetails(props.scene);
+    const rightStyle = details.options.headerRightStyle;
     return this._renderSubView(
-      props,
+      { ...props, style: rightStyle },
       'right',
       this._renderRightComponent,
       HeaderStyleInterpolator.forRight
