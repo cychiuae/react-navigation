@@ -51,6 +51,14 @@ export type NavigationSetParamsAction = {
   params?: NavigationParams,
 };
 
+export type NavigationTransitionStartAction = {
+  type: 'Navigation/TRANSITION_START',
+};
+
+export type NavigationTransitionEndAction = {
+  type: 'Navigation/TRANSITION_END',
+};
+
 export type NavigationInitAction = {
   type: 'Navigation/INIT',
   params?: NavigationParams,
@@ -73,7 +81,9 @@ export type NavigationStackAction =
   | NavigationNavigateAction
   | NavigationBackAction
   | NavigationSetParamsAction
-  | NavigationResetAction;
+  | NavigationResetAction
+  | NavigationTransitionStartAction
+  | NavigationTransitionEndAction;
 
 export type NavigationTabAction =
   | NavigationInitAction

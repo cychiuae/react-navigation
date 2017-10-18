@@ -10,6 +10,8 @@ const NAVIGATE = 'Navigation/NAVIGATE';
 const RESET = 'Navigation/RESET';
 const SET_PARAMS = 'Navigation/SET_PARAMS';
 const URI = 'Navigation/URI';
+const TRANSITION_START = 'Navigation/TRANSITION_START';
+const TRANSITION_END = 'Navigation/TRANSITION_END';
 
 const createAction = (type: string) => (payload: Object = {}) => ({
   type,
@@ -22,6 +24,8 @@ const navigate = createAction(NAVIGATE);
 const reset = createAction(RESET);
 const setParams = createAction(SET_PARAMS);
 const uri = createAction(URI);
+const transitionStart = createAction(TRANSITION_START);
+const transitionEnd = createAction(TRANSITION_END);
 
 const deprecatedActionMap = {
   Back: BACK,
@@ -64,6 +68,8 @@ export default {
   RESET,
   SET_PARAMS,
   URI,
+  TRANSITION_START,
+  TRANSITION_END,
 
   // Action creators
   back,
@@ -72,6 +78,8 @@ export default {
   reset,
   setParams,
   uri,
+  transitionStart,
+  transitionEnd,
 
   // TODO: Remove once old actions are deprecated
   mapDeprecatedActionAndWarn,
