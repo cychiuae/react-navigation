@@ -8,6 +8,12 @@ import type {
   TransitionConfig,
 } from '../../TypeDefinition';
 
+type TransitionConfigurer = (
+  transitionProps: NavigationTransitionProps,
+  prevTransitionProps: NavigationTransitionProps,
+  isModal: boolean
+) => TransitionConfig;
+
 import CardStackStyleInterpolator from './CardStackStyleInterpolator';
 
 const IOSTransitionSpec = ({
@@ -84,7 +90,7 @@ function defaultTransitionConfig(
 }
 
 function getTransitionConfig(
-  transitionConfigurer?: () => TransitionConfig,
+  transitionConfigurer?: TransitionConfigurer,
   // props for the new screen
   transitionProps: NavigationTransitionProps,
   // props for the old screen
@@ -99,7 +105,7 @@ function getTransitionConfig(
   if (transitionConfigurer) {
     return {
       ...defaultConfig,
-      ...transitionConfigurer(),
+      ...transitionConfigurer(transitionProps, prevTransitionProps, isModal),
     };
   }
   return defaultConfig;
