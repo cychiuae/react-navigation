@@ -4,12 +4,13 @@
 
 import React from 'react';
 
-import { Animated, Platform, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, Platform, StyleSheet, View } from 'react-native';
 
 import HeaderTitle from './HeaderTitle';
 import HeaderBackButton from './HeaderBackButton';
 import HeaderStyleInterpolator from './HeaderStyleInterpolator';
 import withOrientation from '../withOrientation';
+import { isIphoneX, isLandscape } from '../../utils/device';
 
 import type {
   NavigationScene,
@@ -33,10 +34,23 @@ type HeaderState = {
   widths: {
     [key: string]: number,
   },
+  statusBarHeight: number,
+};
+
+const getStatusBarHeight = (dimensions: ?any) => {
+  if (Platform.OS === 'android' || isLandscape(dimensions)) {
+    return 0;
+  }
+
+  if (isIphoneX()) {
+    return 44;
+  }
+
+  return 20;
 };
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+const STATUSBAR_HEIGHT = getStatusBarHeight();
 const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 56;
 
 class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
@@ -44,6 +58,19 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
 
   state = {
     widths: {},
+    statusBarHeight: STATUSBAR_HEIGHT,
+  };
+
+  componentDidMount() {
+    Dimensions.addEventListener('change', this._orientationChange);
+  }
+
+  componentWillUnmount() {
+    Dimensions.removeEventListener('change', this._orientationChange);
+  }
+
+  _orientationChange = (dimensions: ?any) => {
+    this.setState({ statusBarHeight: getStatusBarHeight(dimensions) });
   };
 
   _getHeaderTitleString(scene: NavigationScene): ?string {
@@ -280,18 +307,17 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
       screenProps,
       progress,
       style,
-      isLandscape,
       ...rest
     } = this.props;
+    const { statusBarHeight } = this.state;
 
     const { options } = this.props.getScreenDetails(scene);
     const headerStyle = options.headerStyle;
-    const landscapeAwareStatusBarHeight = isLandscape ? 0 : STATUSBAR_HEIGHT;
     const containerStyles = [
       styles.container,
       {
-        paddingTop: landscapeAwareStatusBarHeight,
-        height: APPBAR_HEIGHT + landscapeAwareStatusBarHeight,
+        paddingTop: statusBarHeight,
+        height: APPBAR_HEIGHT + statusBarHeight,
       },
       headerStyle,
       style,

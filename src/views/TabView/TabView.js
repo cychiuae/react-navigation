@@ -5,6 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import { TabViewAnimated, TabViewPagerPan } from 'react-native-tab-view';
 import SceneView from '../SceneView';
 import withCachedChildNavigation from '../../withCachedChildNavigation';
+import { isIphoneX, isLandscape } from '../../utils/device';
 
 import type {
   NavigationScreenProp,
@@ -211,6 +212,7 @@ export default withCachedChildNavigation(TabView);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: isIphoneX() ? 34 : 0,
   },
 
   page: {
