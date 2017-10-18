@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: isIphoneX() ? 34 : 0,
+    backgroundColor: 'white',
   },
 
   page: {
