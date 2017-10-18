@@ -26,6 +26,7 @@ export default (
     transitionConfig,
     onTransitionStart,
     onTransitionEnd,
+    onPanResponderRelease,
     navigationOptions,
   } = stackConfig;
 
@@ -53,6 +54,7 @@ export default (
       transitionConfig={transitionConfig}
       onTransitionStart={onTransitionStart}
       onTransitionEnd={onTransitionEnd}
+      onPanResponderRelease={onPanResponderRelease}
     />
   ));
 

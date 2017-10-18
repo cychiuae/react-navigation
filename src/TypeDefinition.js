@@ -303,6 +303,7 @@ export type NavigationStackViewConfig = {
   transitionConfig?: () => TransitionConfig,
   onTransitionStart?: () => void,
   onTransitionEnd?: () => void,
+  onPanResponderRelease?: () => void,
 };
 
 export type StackNavigatorConfig = {
