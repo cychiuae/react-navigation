@@ -293,13 +293,12 @@ class Header extends React.PureComponent<Props, State> {
       position,
       screenProps,
       progress,
-      isLandscape,
       ...rest
     } = this.props;
 
     const { options } = this.props.getScreenDetails(scene);
     const { headerStyle } = options;
-    const appBarHeight = Platform.OS === 'ios' ? (isLandscape ? 32 : 44) : 56;
+    const appBarHeight = Platform.OS === 'ios' ? 44 : 56;
     const containerStyles = [
       styles.container,
       {
